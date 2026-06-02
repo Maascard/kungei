@@ -59,9 +59,14 @@ foreach ($k in $keys) {
   }
 }
 
+# Подключаем GitHub-репозиторий для автодеплоя при git push (не критично, если не выйдет)
+Write-Host "Подключаем GitHub для автоматических обновлений..." -ForegroundColor Cyan
+(vercel git connect) 2>$null
+
 # Публикуем
 Write-Host "`nПубликуем сайт (production)..." -ForegroundColor Cyan
 vercel --prod
 
 Write-Host "`nГотово! Сайт опубликован. Адрес показан выше." -ForegroundColor Green
+Write-Host "Теперь после 'git push' сайт будет обновляться автоматически." -ForegroundColor Green
 Write-Host "Админка: <адрес>/admin   (логин/пароль — из .env)" -ForegroundColor Green
