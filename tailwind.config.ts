@@ -7,14 +7,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Premium warm/earthy palette
-        cream: "#F7F3EC",
-        sand: "#EDE4D3",
-        clay: "#C8A97E",
-        bronze: "#A67C52",
-        forest: "#2F3E35",
-        moss: "#4A5D4E",
-        charcoal: "#1C1B18",
+        // Премиальная палитра «бордо + золото + айвори» (в стиле бренда IGILIK BI)
+        cream: "#F8F3E9", // тёплый айвори (фон)
+        sand: "#EFE3CE", // светлый шампань
+        clay: "#DAB86E", // мягкое золото
+        bronze: "#B68A38", // золото/бронза (акценты, цены)
+        forest: "#6E1F2B", // глубокое бордо (основной тёмный)
+        moss: "#8A3340", // светлее бордо (наведение)
+        charcoal: "#2B201B", // эспрессо (текст, футер)
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],

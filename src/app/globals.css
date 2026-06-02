@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-sans: "Manrope", system-ui, sans-serif;
   --font-display: "Playfair Display", Georgia, serif;
 }
 
@@ -31,7 +31,7 @@ section[id] {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98];
   }
   .btn-primary {
-    @apply btn bg-forest text-cream hover:bg-moss shadow-soft;
+    @apply btn relative overflow-hidden bg-forest text-cream hover:bg-moss shadow-soft;
   }
   .btn-outline {
     @apply btn border border-forest/30 text-forest hover:bg-forest hover:text-cream;
@@ -46,12 +46,12 @@ section[id] {
   .section-title {
     @apply font-display text-3xl sm:text-4xl text-forest;
   }
-  /* Декоративная линия-акцент под заголовком */
+  /* Декоративная линия-акцент под заголовком (мерцающее золото) */
   .title-accent {
-    @apply mt-4 h-[3px] w-16 rounded-full bg-gradient-to-r from-bronze to-clay;
+    @apply mt-4 h-[3px] w-16 rounded-full bg-gradient-to-r from-clay via-bronze to-clay bg-[length:200%_100%] animate-shimmer;
   }
   .title-accent-center {
-    @apply mx-auto mt-4 h-[3px] w-16 rounded-full bg-gradient-to-r from-clay via-bronze to-clay;
+    @apply mx-auto mt-4 h-[3px] w-20 rounded-full bg-gradient-to-r from-clay via-bronze to-clay bg-[length:200%_100%] animate-shimmer;
   }
   /* Мягкое поднятие карточки при наведении */
   .lift {
@@ -102,4 +102,42 @@ section[id] {
 .rdp-today:not(.rdp-selected) .rdp-day_button {
   color: theme("colors.bronze");
   font-weight: 600;
+}
+
+/* Блеск на главной кнопке при наведении */
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 70%
+  );
+  transform: translateX(-130%);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+}
+.btn-primary:hover::after {
+  transform: translateX(130%);
+}
+
+/* Плавающие декоративные градиентные пятна */
+.blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-kenburns,
+  .animate-float,
+  .animate-shimmer,
+  .btn-primary::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

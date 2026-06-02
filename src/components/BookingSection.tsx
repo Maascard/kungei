@@ -156,8 +156,9 @@ export default function BookingSection({
   };
 
   return (
-    <section id="booking" className="bg-forest py-20 text-cream sm:py-28">
-      <div className="container-x">
+    <section id="booking" className="relative overflow-hidden bg-forest py-20 text-cream sm:py-28">
+      <div className="blob left-1/2 top-[-4rem] h-72 w-72 -translate-x-1/2 animate-float bg-clay/25" />
+      <div className="container-x relative z-10">
         <div className="mb-10 text-center">
           <h2 className="section-title text-cream">{dict.sections.bookingTitle}</h2>
           <p className="mt-3 text-cream/70">{dict.sections.bookingSubtitle}</p>

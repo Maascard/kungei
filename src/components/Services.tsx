@@ -14,8 +14,13 @@ export default function Services({
 }) {
   if (services.length === 0) return null;
   return (
-    <section id="services" className="bg-cream py-20 sm:py-24">
-      <div className="container-x">
+    <section id="services" className="relative overflow-hidden bg-cream py-20 sm:py-24">
+      <div className="blob left-[-6rem] top-10 h-72 w-72 animate-float bg-clay/40" />
+      <div
+        className="blob bottom-0 right-[-5rem] h-80 w-80 animate-float bg-forest/15"
+        style={{ animationDelay: "2s" }}
+      />
+      <div className="container-x relative z-10">
         <Reveal className="mb-10 text-center">
           <h2 className="section-title">{dict.sections.servicesTitle}</h2>
           <p className="mt-3 text-charcoal/60">{dict.sections.servicesSubtitle}</p>
@@ -24,8 +29,8 @@ export default function Services({
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => (
             <Reveal key={i} delay={i * 100}>
-              <div className="lift flex h-full flex-col items-start rounded-2xl bg-white p-6 shadow-soft">
-                <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-forest/15 to-clay/20 text-forest">
+              <div className="lift group flex h-full flex-col items-start rounded-2xl bg-white p-6 shadow-soft">
+                <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-forest/15 to-clay/25 text-forest transition-transform duration-300 group-hover:scale-110">
                   <Icon name={ICONS[i % ICONS.length]} />
                 </span>
                 <h3 className="font-display text-lg text-forest">{s.title}</h3>
