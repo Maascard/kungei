@@ -27,6 +27,14 @@ export function toList(value: string): string[] {
     .filter(Boolean);
 }
 
+// Разбирает список услуг: каждая строка "Название|Описание" (описание необязательно).
+export function toServices(value: string): { title: string; desc: string }[] {
+  return toList(value).map((line) => {
+    const [title, ...rest] = line.split("|");
+    return { title: title.trim(), desc: rest.join("|").trim() };
+  });
+}
+
 export async function getGallery() {
   return prisma.galleryImage.findMany({ orderBy: { sortOrder: "asc" } });
 }

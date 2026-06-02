@@ -4,7 +4,6 @@ export default function About({
   dict,
   about,
   capacity,
-  price,
   address,
   suitableFor,
   amenities,
@@ -13,7 +12,6 @@ export default function About({
   dict: Dictionary;
   about: string;
   capacity: string;
-  price: string;
   address: string;
   suitableFor: string[];
   amenities: string[];
@@ -28,9 +26,8 @@ export default function About({
         </div>
 
         {/* Краткие факты */}
-        <div className="mb-10 grid gap-4 sm:grid-cols-3">
+        <div className="mb-10 grid gap-4 sm:grid-cols-2">
           <FactCard label={dict.sections.capacity} value={capacity} icon="users" />
-          <FactCard label={dict.sections.price} value={price} icon="tag" />
           <FactCard label={dict.sections.address} value={address} icon="pin" />
         </div>
 

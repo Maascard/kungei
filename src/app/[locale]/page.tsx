@@ -8,6 +8,7 @@ import {
   getReviews,
   pick,
   toList,
+  toServices,
 } from "@/lib/content";
 import { whatsappLink, instagramLink } from "@/lib/messaging";
 
@@ -15,6 +16,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Gallery from "@/components/Gallery";
 import About from "@/components/About";
+import Services from "@/components/Services";
 import MenuSection from "@/components/MenuSection";
 import BookingSection from "@/components/BookingSection";
 import Reviews from "@/components/Reviews";
@@ -98,11 +100,14 @@ export default async function HomePage({
           dict={dict}
           about={pick(settings, "about", locale)}
           capacity={pick(settings, "capacity", locale)}
-          price={pick(settings, "price_from", locale)}
           address={address}
           suitableFor={toList(pick(settings, "events", locale))}
           amenities={toList(pick(settings, "amenities", locale))}
           rules={toList(pick(settings, "rules", locale))}
+        />
+        <Services
+          dict={dict}
+          services={toServices(pick(settings, "services", locale))}
         />
         <MenuSection dict={dict} categories={menuView} />
         <BookingSection locale={locale} dict={dict} />

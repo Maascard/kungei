@@ -43,8 +43,13 @@ const GROUPS: Group[] = [
       { key: "about_kk", label: "Описание (қаз)", type: "textarea" },
       { key: "capacity_ru", label: "Вместимость (рус)" },
       { key: "capacity_kk", label: "Вместимость (қаз)" },
-      { key: "price_from_ru", label: "Стоимость (рус)" },
-      { key: "price_from_kk", label: "Стоимость (қаз)" },
+    ],
+  },
+  {
+    title: "Услуги (каждая с новой строки, формат: Название|Описание)",
+    fields: [
+      { key: "services_ru", label: "Услуги (рус)", type: "textarea", hint: "Например: Баня / сауна|Настоящая баня с парной" },
+      { key: "services_kk", label: "Услуги (қаз)", type: "textarea", hint: "Мысалы: Монша / сауна|Бумен нағыз монша" },
     ],
   },
   {
