@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "kungei",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": ["/c", "scripts\\preview-dev.cmd"],
+      "port": 3000
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+// Prisma schema for Kungei cottage rental site.
+//
+// Локально используется SQLite (provider = "sqlite") — запускается без настройки.
+// Для деплоя на Vercel замените provider на "postgresql" и укажите DATABASE_URL
+// строкой подключения Postgres (Neon/Supabase). Модели совместимы с обеими БД
+// (без native enum / Json — статусы хранятся строками).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Заявка на бронирование.
+// status:  pending | confirmed | cancelled
+// channel: whatsapp | instagram
+model Booking {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  startDate DateTime
+  endDate   DateTime
+  guests    Int      @default(1)
+  comment   String?
+  channel   String   @default("whatsapp")
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([startDate, endDate])
+  @@index([status])
+}
+
+// Ручная блокировка дат админом (ремонт, личное использование и т.п.)
+model BlockedRange {
+  id        String   @id @default(cuid())
+  startDate DateTime
+  endDate   DateTime
+  reason    String?
+  createdAt DateTime @default(now())
+
+  @@index([startDate, endDate])
+}
+
+// Фотографии галереи
+model GalleryImage {
+  id        String   @id @default(cuid())
+  url       String
+  captionRu String?
+  captionKk String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([sortOrder])
+}
+
+// Категория меню
+model MenuCategory {
+  id        String     @id @default(cuid())
+  titleRu   String
+  titleKk   String
+  sortOrder Int        @default(0)
+  items     MenuItem[]
+}
+
+// Блюдо в меню
+model MenuItem {
+  id         String       @id @default(cuid())
+  categoryId String
+  category   MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  titleRu    String
+  titleKk    String
+  descRu     String?
+  descKk     String?
+  price      Int          @default(0)
+  imageUrl   String?
+  available  Boolean      @default(true)
+  sortOrder  Int          @default(0)
+
+  @@index([categoryId])
+  @@index([sortOrder])
+}
+
+// Отзыв
+model Review {
+  id        String   @id @default(cuid())
+  author    String
+  textRu    String
+  textKk    String?
+  rating    Int      @default(5)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([sortOrder])
+}
+
+// Сообщения чат-бота WhatsApp (история диалога по номеру + дедупликация ретраев Meta).
+// role: user | assistant
+model ChatMessage {
+  id          String   @id @default(cuid())
+  waId        String // номер/идентификатор пользователя WhatsApp
+  waMessageId String?  @unique // id входящего сообщения Meta — защита от двойной обработки
+  role        String
+  text        String
+  createdAt   DateTime @default(now())
+
+  @@index([waId, createdAt])
+}
+
+// Редактируемые настройки/тексты сайта (key -> value).
+// Локализованные значения хранятся под ключами вида "hero_title_ru" / "hero_title_kk".
+model Setting {
+  key   String @id
+  value String
+}

@@ -1,0 +1,173 @@
+import type { Locale } from "./config";
+
+const ru = {
+  nav: {
+    home: "Главная",
+    gallery: "Галерея",
+    about: "О коттедже",
+    menu: "Меню",
+    booking: "Бронирование",
+    reviews: "Отзывы",
+    contacts: "Контакты",
+  },
+  buttons: {
+    book: "Забронировать",
+    menu: "Меню",
+    whatsapp: "Написать в WhatsApp",
+    instagram: "Написать в Instagram",
+    sendWhatsapp: "Отправить в WhatsApp",
+    sendInstagram: "Отправить в Instagram",
+    viewGallery: "Смотреть фото",
+    all: "Все",
+  },
+  sections: {
+    galleryTitle: "Галерея",
+    gallerySubtitle: "Загляните внутрь и оцените атмосферу",
+    aboutTitle: "О коттедже",
+    capacity: "Вместимость",
+    suitableFor: "Подходит для",
+    amenities: "Удобства",
+    rules: "Условия аренды",
+    address: "Адрес",
+    price: "Стоимость",
+    menuTitle: "Меню",
+    menuSubtitle: "Блюда, которые мы можем приготовить для вашего отдыха",
+    bookingTitle: "Бронирование",
+    bookingSubtitle: "Выберите свободные даты и оставьте заявку",
+    reviewsTitle: "Отзывы гостей",
+    contactsTitle: "Контакты",
+    mapTitle: "Как нас найти",
+  },
+  booking: {
+    selectDates: "Выберите даты",
+    selectDatesHint: "Нажмите на дату заезда, затем на дату выезда",
+    checkIn: "Заезд",
+    checkOut: "Выезд",
+    nights: "ночей",
+    name: "Ваше имя",
+    namePlaceholder: "Как к вам обращаться",
+    phone: "Номер телефона",
+    phonePlaceholder: "+7 ___ ___ __ __",
+    guests: "Количество гостей",
+    comment: "Комментарий",
+    commentPlaceholder: "Пожелания, повод, вопросы…",
+    chooseChannel: "Куда отправить заявку?",
+    submitting: "Отправляем…",
+    occupied: "Занято",
+    legendFree: "Свободно",
+    legendBusy: "Занято",
+    required: "Обязательное поле",
+    successTitle: "Заявка принята!",
+    successText:
+      "Выбранные даты забронированы за вами. Сейчас откроется мессенджер для подтверждения — отправьте готовое сообщение, и мы свяжемся с вами.",
+    successOpen: "Открыть мессенджер",
+    errorOverlap:
+      "К сожалению, эти даты только что заняли. Пожалуйста, выберите другие.",
+    errorGeneric: "Не удалось отправить заявку. Попробуйте ещё раз.",
+    errorNoDates: "Пожалуйста, выберите даты заезда и выезда.",
+    close: "Закрыть",
+  },
+  menu: {
+    from: "от",
+    currency: "₸",
+  },
+  footer: {
+    rights: "Все права защищены",
+    madeBy: "Бронирование и контакты",
+  },
+  meta: {
+    title: "Коттедж Kungei — аренда коттеджа",
+    description:
+      "Аренда современного коттеджа для отдыха и мероприятий. Фото, меню, удобства и онлайн-бронирование.",
+  },
+};
+
+const kk: typeof ru = {
+  nav: {
+    home: "Басты бет",
+    gallery: "Галерея",
+    about: "Коттедж туралы",
+    menu: "Мәзір",
+    booking: "Брондау",
+    reviews: "Пікірлер",
+    contacts: "Байланыс",
+  },
+  buttons: {
+    book: "Брондау",
+    menu: "Мәзір",
+    whatsapp: "WhatsApp-қа жазу",
+    instagram: "Instagram-ға жазу",
+    sendWhatsapp: "WhatsApp-қа жіберу",
+    sendInstagram: "Instagram-ға жіберу",
+    viewGallery: "Фотоларды көру",
+    all: "Барлығы",
+  },
+  sections: {
+    galleryTitle: "Галерея",
+    gallerySubtitle: "Іштей көріп, атмосфераны сезініңіз",
+    aboutTitle: "Коттедж туралы",
+    capacity: "Сыйымдылығы",
+    suitableFor: "Қолайлы",
+    amenities: "Ыңғайлылықтар",
+    rules: "Жалдау шарттары",
+    address: "Мекенжай",
+    price: "Бағасы",
+    menuTitle: "Мәзір",
+    menuSubtitle: "Демалысыңызға дайындай алатын тағамдар",
+    bookingTitle: "Брондау",
+    bookingSubtitle: "Бос күндерді таңдап, өтінім қалдырыңыз",
+    reviewsTitle: "Қонақтардың пікірлері",
+    contactsTitle: "Байланыс",
+    mapTitle: "Бізді қалай табуға болады",
+  },
+  booking: {
+    selectDates: "Күндерді таңдаңыз",
+    selectDatesHint: "Кіру күнін, содан кейін шығу күнін басыңыз",
+    checkIn: "Кіру",
+    checkOut: "Шығу",
+    nights: "түн",
+    name: "Атыңыз",
+    namePlaceholder: "Сізге қалай жүгінейік",
+    phone: "Телефон нөмірі",
+    phonePlaceholder: "+7 ___ ___ __ __",
+    guests: "Қонақтар саны",
+    comment: "Пікір",
+    commentPlaceholder: "Тілектер, себеп, сұрақтар…",
+    chooseChannel: "Өтінімді қайда жіберу керек?",
+    submitting: "Жіберілуде…",
+    occupied: "Бос емес",
+    legendFree: "Бос",
+    legendBusy: "Бос емес",
+    required: "Міндетті өріс",
+    successTitle: "Өтінім қабылданды!",
+    successText:
+      "Таңдалған күндер сізге брондалды. Қазір растау үшін мессенджер ашылады — дайын хабарламаны жіберіңіз, біз сізбен хабарласамыз.",
+    successOpen: "Мессенджерді ашу",
+    errorOverlap:
+      "Өкінішке орай, бұл күндер жаңа ғана брондалды. Басқа күндерді таңдаңыз.",
+    errorGeneric: "Өтінімді жіберу мүмкін болмады. Қайталап көріңіз.",
+    errorNoDates: "Кіру және шығу күндерін таңдаңыз.",
+    close: "Жабу",
+  },
+  menu: {
+    from: "бастап",
+    currency: "₸",
+  },
+  footer: {
+    rights: "Барлық құқықтар қорғалған",
+    madeBy: "Брондау және байланыс",
+  },
+  meta: {
+    title: "Küngey коттеджі — коттедж жалдау",
+    description:
+      "Демалыс пен іс-шараларға арналған заманауи коттедж жалдау. Фото, мәзір, ыңғайлылықтар және онлайн брондау.",
+  },
+};
+
+const dictionaries = { ru, kk };
+
+export type Dictionary = typeof ru;
+
+export function getDictionary(locale: Locale): Dictionary {
+  return dictionaries[locale];
+}

@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: theme("colors.cream");
+  color: theme("colors.charcoal");
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Чтобы якорные переходы не заезжали под фиксированный хедер */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-200 active:scale-[0.98];
+  }
+  .btn-primary {
+    @apply btn bg-forest text-cream hover:bg-moss shadow-soft;
+  }
+  .btn-outline {
+    @apply btn border border-forest/30 text-forest hover:bg-forest hover:text-cream;
+  }
+  .btn-wa {
+    @apply btn bg-[#25D366] text-white hover:brightness-95;
+  }
+  .btn-ig {
+    @apply btn text-white hover:brightness-95;
+    background-image: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  }
+  .section-title {
+    @apply font-display text-3xl sm:text-4xl text-forest;
+  }
+  .field {
+    @apply w-full rounded-xl border border-charcoal/15 bg-white px-4 py-3 text-charcoal outline-none transition focus:border-bronze focus:ring-2 focus:ring-bronze/30;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-charcoal/80;
+  }
+}
+
+/* react-day-picker — премиальная тема */
+.rdp-root {
+  --rdp-accent-color: theme("colors.forest");
+  --rdp-accent-background-color: theme("colors.sand");
+  --rdp-day-width: 2.6rem;
+  --rdp-day-height: 2.6rem;
+  --rdp-day_button-width: 2.6rem;
+  --rdp-day_button-height: 2.6rem;
+  margin: 0;
+}
+.rdp-day_button {
+  border-radius: 9999px;
+}
+.rdp-disabled .rdp-day_button {
+  position: relative;
+  color: theme("colors.charcoal" / 35%);
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+.rdp-selected .rdp-day_button {
+  background-color: theme("colors.forest");
+  color: theme("colors.cream");
+  border: none;
+}
+.rdp-range_middle .rdp-day_button {
+  background-color: theme("colors.sand");
+  color: theme("colors.forest");
+  border-radius: 0;
+}
+.rdp-range_start .rdp-day_button,
+.rdp-range_end .rdp-day_button {
+  background-color: theme("colors.forest");
+  color: theme("colors.cream");
+}
+.rdp-today:not(.rdp-selected) .rdp-day_button {
+  color: theme("colors.bronze");
+  font-weight: 600;
+}
