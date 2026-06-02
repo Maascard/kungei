@@ -1,4 +1,5 @@
 import type { Dictionary } from "@/i18n/dictionaries";
+import Reveal from "./Reveal";
 
 export default function About({
   dict,
@@ -20,21 +21,32 @@ export default function About({
   return (
     <section id="about" className="bg-sand/40 py-20 sm:py-28">
       <div className="container-x">
-        <div className="mb-12 max-w-3xl">
+        <Reveal className="mb-12 max-w-3xl">
           <h2 className="section-title">{dict.sections.aboutTitle}</h2>
-          <p className="mt-4 text-lg leading-relaxed text-charcoal/75">{about}</p>
-        </div>
+          <div className="title-accent" />
+          <p className="mt-5 text-lg leading-relaxed text-charcoal/75">{about}</p>
+        </Reveal>
 
         {/* Краткие факты */}
         <div className="mb-10 grid gap-4 sm:grid-cols-2">
-          <FactCard label={dict.sections.capacity} value={capacity} icon="users" />
-          <FactCard label={dict.sections.address} value={address} icon="pin" />
+          <Reveal delay={0}>
+            <FactCard label={dict.sections.capacity} value={capacity} icon="users" />
+          </Reveal>
+          <Reveal delay={100}>
+            <FactCard label={dict.sections.address} value={address} icon="pin" />
+          </Reveal>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
-          <InfoBlock title={dict.sections.suitableFor} items={suitableFor} />
-          <InfoBlock title={dict.sections.amenities} items={amenities} />
-          <InfoBlock title={dict.sections.rules} items={rules} />
+          <Reveal delay={0}>
+            <InfoBlock title={dict.sections.suitableFor} items={suitableFor} />
+          </Reveal>
+          <Reveal delay={100}>
+            <InfoBlock title={dict.sections.amenities} items={amenities} />
+          </Reveal>
+          <Reveal delay={200}>
+            <InfoBlock title={dict.sections.rules} items={rules} />
+          </Reveal>
         </div>
       </div>
     </section>
@@ -51,7 +63,7 @@ function FactCard({
   icon: "users" | "tag" | "pin";
 }) {
   return (
-    <div className="flex items-start gap-4 rounded-2xl bg-white p-5 shadow-soft">
+    <div className="lift flex items-start gap-4 rounded-2xl bg-white p-5 shadow-soft">
       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-forest/10 text-forest">
         <Icon name={icon} />
       </span>
@@ -66,7 +78,7 @@ function FactCard({
 function InfoBlock({ title, items }: { title: string; items: string[] }) {
   if (items.length === 0) return null;
   return (
-    <div className="rounded-2xl bg-white p-6 shadow-soft">
+    <div className="lift h-full rounded-2xl bg-white p-6 shadow-soft">
       <h3 className="mb-4 font-display text-xl text-forest">{title}</h3>
       <ul className="space-y-2.5">
         {items.map((item, i) => (

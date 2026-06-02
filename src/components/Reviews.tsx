@@ -1,4 +1,5 @@
 import type { Dictionary } from "@/i18n/dictionaries";
+import Reveal from "./Reveal";
 
 type ReviewView = { id: string; author: string; text: string; rating: number };
 
@@ -13,23 +14,23 @@ export default function Reviews({
   return (
     <section id="reviews" className="bg-sand/40 py-20 sm:py-28">
       <div className="container-x">
-        <div className="mb-10 text-center">
+        <Reveal className="mb-10 text-center">
           <h2 className="section-title">{dict.sections.reviewsTitle}</h2>
-        </div>
+          <div className="title-accent-center" />
+        </Reveal>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {reviews.map((r) => (
-            <figure
-              key={r.id}
-              className="flex flex-col rounded-2xl bg-white p-6 shadow-soft"
-            >
-              <Stars n={r.rating} />
-              <blockquote className="mt-3 flex-1 text-charcoal/75">
-                “{r.text}”
-              </blockquote>
-              <figcaption className="mt-4 font-medium text-forest">
-                {r.author}
-              </figcaption>
-            </figure>
+          {reviews.map((r, i) => (
+            <Reveal key={r.id} delay={(i % 3) * 90}>
+              <figure className="lift flex h-full flex-col rounded-2xl bg-white p-6 shadow-soft">
+                <Stars n={r.rating} />
+                <blockquote className="mt-3 flex-1 text-charcoal/75">
+                  “{r.text}”
+                </blockquote>
+                <figcaption className="mt-4 font-medium text-forest">
+                  {r.author}
+                </figcaption>
+              </figure>
+            </Reveal>
           ))}
         </div>
       </div>

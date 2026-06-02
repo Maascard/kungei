@@ -161,6 +161,7 @@ export default function BookingSection({
         <div className="mb-10 text-center">
           <h2 className="section-title text-cream">{dict.sections.bookingTitle}</h2>
           <p className="mt-3 text-cream/70">{dict.sections.bookingSubtitle}</p>
+          <div className="title-accent-center" />
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Dictionary } from "@/i18n/dictionaries";
+import Reveal from "./Reveal";
 
 export type MenuItemView = {
   id: string;
@@ -35,10 +36,11 @@ export default function MenuSection({
   return (
     <section id="menu" className="bg-cream py-20 sm:py-28">
       <div className="container-x">
-        <div className="mb-8 text-center">
+        <Reveal className="mb-8 text-center">
           <h2 className="section-title">{dict.sections.menuTitle}</h2>
           <p className="mt-3 text-charcoal/60">{dict.sections.menuSubtitle}</p>
-        </div>
+          <div className="title-accent-center" />
+        </Reveal>
 
         {/* Категории */}
         <div className="mb-10 flex flex-wrap justify-center gap-2">
@@ -59,32 +61,33 @@ export default function MenuSection({
                 <h3 className="mb-5 font-display text-2xl text-forest">{cat.title}</h3>
               )}
               <div className="grid gap-4 sm:grid-cols-2">
-                {cat.items.map((item) => (
-                  <article
-                    key={item.id}
-                    className="flex gap-4 rounded-2xl bg-white p-3 shadow-soft"
-                  >
-                    {item.imageUrl && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={item.imageUrl}
-                        alt={item.title}
-                        loading="lazy"
-                        className="h-24 w-24 shrink-0 rounded-xl object-cover sm:h-28 sm:w-28"
-                      />
-                    )}
-                    <div className="flex flex-1 flex-col justify-center py-1">
-                      <div className="flex items-baseline justify-between gap-3">
-                        <h4 className="font-medium text-charcoal">{item.title}</h4>
-                        <span className="whitespace-nowrap font-display text-lg text-bronze">
-                          {item.price.toLocaleString("ru-RU")} {dict.menu.currency}
-                        </span>
-                      </div>
-                      {item.desc && (
-                        <p className="mt-1 text-sm text-charcoal/60">{item.desc}</p>
+                {cat.items.map((item, idx) => (
+                  <Reveal key={item.id} delay={(idx % 2) * 80}>
+                    <article className="lift flex h-full gap-4 rounded-2xl bg-white p-3 shadow-soft">
+                      {item.imageUrl && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={item.imageUrl}
+                          alt={item.title}
+                          loading="lazy"
+                          className="h-24 w-24 shrink-0 rounded-xl object-cover sm:h-28 sm:w-28"
+                        />
                       )}
-                    </div>
-                  </article>
+                      <div className="flex flex-1 flex-col justify-center py-1">
+                        <div className="flex items-baseline justify-between gap-3">
+                          <h4 className="font-medium text-charcoal">{item.title}</h4>
+                          {item.price > 0 && (
+                            <span className="whitespace-nowrap font-display text-lg text-bronze">
+                              {item.price.toLocaleString("ru-RU")} {dict.menu.currency}
+                            </span>
+                          )}
+                        </div>
+                        {item.desc && (
+                          <p className="mt-1 text-sm text-charcoal/60">{item.desc}</p>
+                        )}
+                      </div>
+                    </article>
+                  </Reveal>
                 ))}
               </div>
             </div>

@@ -23,7 +23,7 @@ export default function Hero({
         <img
           src={image}
           alt=""
-          className="h-full w-full object-cover"
+          className="h-full w-full animate-kenburns object-cover will-change-transform"
           fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal/55 via-charcoal/35 to-charcoal/70" />

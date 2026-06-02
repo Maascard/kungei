@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from "react";
 import type { Dictionary } from "@/i18n/dictionaries";
+import Reveal from "./Reveal";
 
 type Img = { id: string; url: string; caption: string };
 
@@ -44,26 +45,32 @@ export default function Gallery({
   return (
     <section id="gallery" className="bg-cream py-20 sm:py-28">
       <div className="container-x">
-        <div className="mb-10 text-center">
+        <Reveal className="mb-10 text-center">
           <h2 className="section-title">{dict.sections.galleryTitle}</h2>
           <p className="mt-3 text-charcoal/60">{dict.sections.gallerySubtitle}</p>
-        </div>
+          <div className="title-accent-center" />
+        </Reveal>
 
         <div className="columns-2 gap-3 sm:columns-3 sm:gap-4">
           {images.map((img, i) => (
-            <button
+            <Reveal
               key={img.id}
-              onClick={() => setActive(i)}
-              className="group mb-3 block w-full overflow-hidden rounded-2xl sm:mb-4"
+              delay={(i % 3) * 80}
+              className="mb-3 break-inside-avoid sm:mb-4"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={img.url}
-                alt={img.caption}
-                loading="lazy"
-                className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </button>
+              <button
+                onClick={() => setActive(i)}
+                className="group block w-full overflow-hidden rounded-2xl"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={img.url}
+                  alt={img.caption}
+                  loading="lazy"
+                  className="w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+              </button>
+            </Reveal>
           ))}
         </div>
       </div>

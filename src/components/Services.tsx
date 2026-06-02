@@ -1,4 +1,5 @@
 import type { Dictionary } from "@/i18n/dictionaries";
+import Reveal from "./Reveal";
 
 type Service = { title: string; desc: string };
 
@@ -15,24 +16,24 @@ export default function Services({
   return (
     <section id="services" className="bg-cream py-20 sm:py-24">
       <div className="container-x">
-        <div className="mb-10 text-center">
+        <Reveal className="mb-10 text-center">
           <h2 className="section-title">{dict.sections.servicesTitle}</h2>
           <p className="mt-3 text-charcoal/60">{dict.sections.servicesSubtitle}</p>
-        </div>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="title-accent-center" />
+        </Reveal>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => (
-            <div
-              key={i}
-              className="flex flex-col items-start rounded-2xl bg-white p-6 shadow-soft transition hover:-translate-y-1"
-            >
-              <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-forest/10 text-forest">
-                <Icon name={ICONS[i % ICONS.length]} />
-              </span>
-              <h3 className="font-display text-lg text-forest">{s.title}</h3>
-              {s.desc && (
-                <p className="mt-2 text-sm text-charcoal/65">{s.desc}</p>
-              )}
-            </div>
+            <Reveal key={i} delay={i * 100}>
+              <div className="lift flex h-full flex-col items-start rounded-2xl bg-white p-6 shadow-soft">
+                <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-forest/15 to-clay/20 text-forest">
+                  <Icon name={ICONS[i % ICONS.length]} />
+                </span>
+                <h3 className="font-display text-lg text-forest">{s.title}</h3>
+                {s.desc && (
+                  <p className="mt-2 text-sm leading-relaxed text-charcoal/65">{s.desc}</p>
+                )}
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>

@@ -28,7 +28,7 @@ section[id] {
     @apply mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8;
   }
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-200 active:scale-[0.98];
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98];
   }
   .btn-primary {
     @apply btn bg-forest text-cream hover:bg-moss shadow-soft;
@@ -45,6 +45,17 @@ section[id] {
   }
   .section-title {
     @apply font-display text-3xl sm:text-4xl text-forest;
+  }
+  /* Декоративная линия-акцент под заголовком */
+  .title-accent {
+    @apply mt-4 h-[3px] w-16 rounded-full bg-gradient-to-r from-bronze to-clay;
+  }
+  .title-accent-center {
+    @apply mx-auto mt-4 h-[3px] w-16 rounded-full bg-gradient-to-r from-clay via-bronze to-clay;
+  }
+  /* Мягкое поднятие карточки при наведении */
+  .lift {
+    @apply transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-soft;
   }
   .field {
     @apply w-full rounded-xl border border-charcoal/15 bg-white px-4 py-3 text-charcoal outline-none transition focus:border-bronze focus:ring-2 focus:ring-bronze/30;
