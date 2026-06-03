@@ -90,6 +90,9 @@ export default function BookingsTab({
                     {b.comment && (
                       <div className="mt-1 text-sm text-charcoal/55">💬 {b.comment}</div>
                     )}
+                    {b.orderItems && (
+                      <div className="mt-1 text-sm text-charcoal/55">🛒 {b.orderItems}</div>
+                    )}
                     <div className="mt-1 text-xs text-charcoal/40">
                       создана {new Date(b.createdAt).toLocaleString("ru-RU")}
                     </div>

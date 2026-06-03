@@ -6,6 +6,7 @@ import { ru } from "date-fns/locale";
 import "react-day-picker/style.css";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { useCart } from "./CartProvider";
 
 // Date (локальный календарный день) -> "YYYY-MM-DD"
 function keyOf(d: Date): string {
@@ -45,6 +46,7 @@ export default function BookingSection({
   const [submitting, setSubmitting] = useState<null | "whatsapp" | "instagram">(null);
   const [error, setError] = useState("");
   const [result, setResult] = useState<Result | null>(null);
+  const { items: cartItems, clear: clearCart } = useCart();
 
   const loadAvailability = async () => {
     try {
@@ -118,6 +120,7 @@ export default function BookingSection({
           comment: comment.trim(),
           channel,
           locale,
+          items: cartItems.map((i) => ({ kind: i.kind, title: i.title })),
         }),
       });
 
@@ -142,12 +145,13 @@ export default function BookingSection({
       // Открываем мессенджер
       window.open(data.link, "_blank", "noopener,noreferrer");
       setResult(data);
-      // Обновляем календарь и сбрасываем форму
+      // Обновляем календарь, сбрасываем форму и корзину
       await loadAvailability();
       setRange(undefined);
       setName("");
       setPhone("");
       setComment("");
+      clearCart();
     } catch {
       setError(dict.booking.errorGeneric);
     } finally {
@@ -265,6 +269,13 @@ export default function BookingSection({
                 <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
                   {error}
                 </p>
+              )}
+
+              {cartItems.length > 0 && (
+                <div className="rounded-xl bg-sand/60 px-4 py-3 text-sm text-charcoal/75">
+                  🛒 {dict.cart.title}: <b>{cartItems.length}</b>
+                  <div className="mt-1 text-charcoal/55">{dict.cart.orderNote}</div>
+                </div>
               )}
 
               <div>

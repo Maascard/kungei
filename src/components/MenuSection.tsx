@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Dictionary } from "@/i18n/dictionaries";
 import Reveal from "./Reveal";
+import AddButton from "./AddButton";
 
 export type MenuItemView = {
   id: string;
@@ -85,6 +86,12 @@ export default function MenuSection({
                         {item.desc && (
                           <p className="mt-1 text-sm text-charcoal/60">{item.desc}</p>
                         )}
+                        <div className="mt-3">
+                          <AddButton
+                            dict={dict}
+                            item={{ id: `food:${item.id}`, kind: "food", title: item.title }}
+                          />
+                        </div>
                       </div>
                     </article>
                   </Reveal>

@@ -7,6 +7,7 @@ import { dayKeyToDate, normalizeDay } from "@/lib/dates";
 import { getSettingsMap } from "@/lib/content";
 import {
   buildBookingMessage,
+  buildOrderSummary,
   whatsappLink,
   instagramLink,
 } from "@/lib/messaging";
@@ -25,6 +26,15 @@ const schema = z.object({
   comment: z.string().trim().max(1000).optional().or(z.literal("")),
   channel: z.enum(["whatsapp", "instagram"]),
   locale: z.string().optional(),
+  items: z
+    .array(
+      z.object({
+        kind: z.enum(["service", "food"]),
+        title: z.string().trim().min(1).max(200),
+      }),
+    )
+    .max(60)
+    .optional(),
 });
 
 export async function POST(req: NextRequest) {
@@ -71,6 +81,7 @@ export async function POST(req: NextRequest) {
             endDate: end,
             guests: data.guests,
             comment: data.comment || null,
+            orderItems: buildOrderSummary(data.items) || null,
             channel: data.channel,
             status: "pending",
           },
@@ -89,6 +100,7 @@ export async function POST(req: NextRequest) {
         endDate: data.endDate,
         guests: booking.guests,
         comment: booking.comment,
+        items: data.items,
       },
       locale,
     );

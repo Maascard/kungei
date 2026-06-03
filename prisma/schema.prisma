@@ -26,6 +26,7 @@ model Booking {
   endDate   DateTime
   guests    Int      @default(1)
   comment   String?
+  orderItems String? // выбранные клиентом услуги и блюда (из корзины)
   channel   String   @default("whatsapp")
   status    String   @default("pending")
   createdAt DateTime @default(now())

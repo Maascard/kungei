@@ -23,6 +23,7 @@ import Reviews from "@/components/Reviews";
 import MapSection from "@/components/MapSection";
 import Footer from "@/components/Footer";
 import FloatingButtons from "@/components/FloatingButtons";
+import { CartProvider } from "@/components/CartProvider";
 
 export const dynamic = "force-dynamic";
 
@@ -84,7 +85,7 @@ export default async function HomePage({
   }));
 
   return (
-    <>
+    <CartProvider>
       <Header locale={locale} dict={dict} />
       <main>
         <Hero
@@ -122,7 +123,7 @@ export default async function HomePage({
           igHandle={settings.instagram_handle}
         />
       </main>
-      <FloatingButtons waLink={waLink} igLink={igLink} />
-    </>
+      <FloatingButtons dict={dict} waLink={waLink} igLink={igLink} />
+    </CartProvider>
   );
 }

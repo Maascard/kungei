@@ -1,5 +1,8 @@
+"use client";
+
 import type { Dictionary } from "@/i18n/dictionaries";
 import Reveal from "./Reveal";
+import AddButton from "./AddButton";
 
 type Service = { title: string; desc: string };
 
@@ -37,6 +40,13 @@ export default function Services({
                 {s.desc && (
                   <p className="mt-2 text-sm leading-relaxed text-charcoal/65">{s.desc}</p>
                 )}
+                <div className="mt-auto w-full pt-4">
+                  <AddButton
+                    dict={dict}
+                    full
+                    item={{ id: `service:${s.title}`, kind: "service", title: s.title }}
+                  />
+                </div>
               </div>
             </Reveal>
           ))}

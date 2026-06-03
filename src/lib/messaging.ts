@@ -1,5 +1,7 @@
 import type { Locale } from "@/i18n/config";
 
+export type OrderItem = { kind: "service" | "food"; title: string };
+
 export type BookingMessageData = {
   name: string;
   phone: string;
@@ -7,6 +9,7 @@ export type BookingMessageData = {
   endDate: string;
   guests: number;
   comment?: string | null;
+  items?: OrderItem[];
 };
 
 // Формирует готовый текст заявки для отправки в мессенджер.
@@ -14,32 +17,66 @@ export function buildBookingMessage(
   data: BookingMessageData,
   locale: Locale,
 ): string {
-  if (locale === "kk") {
-    const lines = [
-      "Жаңа брондау өтінімі — Küngey коттеджі",
-      "",
-      `Аты: ${data.name}`,
-      `Телефон: ${data.phone}`,
-      data.startDate === data.endDate
-        ? `Күні: ${data.startDate}`
-        : `Күндері: ${data.startDate} — ${data.endDate}`,
-      `Қонақтар: ${data.guests}`,
-    ];
-    if (data.comment) lines.push(`Пікір: ${data.comment}`);
-    return lines.join("\n");
-  }
+  const services = (data.items ?? []).filter((i) => i.kind === "service");
+  const food = (data.items ?? []).filter((i) => i.kind === "food");
+  const L =
+    locale === "kk"
+      ? {
+          header: "Жаңа брондау өтінімі — Küngey коттеджі",
+          name: "Аты",
+          phone: "Телефон",
+          date: "Күні",
+          dates: "Күндері",
+          guests: "Қонақтар",
+          services: "Таңдалған қызметтер",
+          food: "Мәзір",
+          comment: "Пікір",
+        }
+      : {
+          header: "Новая заявка на бронирование — коттедж Kungei",
+          name: "Имя",
+          phone: "Телефон",
+          date: "Дата",
+          dates: "Даты",
+          guests: "Гостей",
+          services: "Выбранные услуги",
+          food: "Меню",
+          comment: "Комментарий",
+        };
+
   const lines = [
-    "Новая заявка на бронирование — коттедж Kungei",
+    L.header,
     "",
-    `Имя: ${data.name}`,
-    `Телефон: ${data.phone}`,
+    `${L.name}: ${data.name}`,
+    `${L.phone}: ${data.phone}`,
     data.startDate === data.endDate
-      ? `Дата: ${data.startDate}`
-      : `Даты: ${data.startDate} — ${data.endDate}`,
-    `Гостей: ${data.guests}`,
+      ? `${L.date}: ${data.startDate}`
+      : `${L.dates}: ${data.startDate} — ${data.endDate}`,
+    `${L.guests}: ${data.guests}`,
   ];
-  if (data.comment) lines.push(`Комментарий: ${data.comment}`);
+
+  if (services.length) {
+    lines.push("", `${L.services}:`);
+    services.forEach((s) => lines.push(`• ${s.title}`));
+  }
+  if (food.length) {
+    lines.push("", `${L.food}:`);
+    food.forEach((f) => lines.push(`• ${f.title}`));
+  }
+  if (data.comment) lines.push("", `${L.comment}: ${data.comment}`);
+
   return lines.join("\n");
+}
+
+// Краткий текст заказа для хранения в БД (для админки).
+export function buildOrderSummary(items?: OrderItem[]): string {
+  if (!items || items.length === 0) return "";
+  const services = items.filter((i) => i.kind === "service").map((i) => i.title);
+  const food = items.filter((i) => i.kind === "food").map((i) => i.title);
+  const parts: string[] = [];
+  if (services.length) parts.push("Услуги: " + services.join(", "));
+  if (food.length) parts.push("Меню: " + food.join(", "));
+  return parts.join(" | ");
 }
 
 // Ссылка для отправки в WhatsApp с готовым текстом.
