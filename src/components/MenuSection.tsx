@@ -89,7 +89,12 @@ export default function MenuSection({
                         <div className="mt-3">
                           <AddButton
                             dict={dict}
-                            item={{ id: `food:${item.id}`, kind: "food", title: item.title }}
+                            item={{
+                              id: `food:${item.id}`,
+                              kind: "food",
+                              title: item.title,
+                              price: item.price,
+                            }}
                           />
                         </div>
                       </div>

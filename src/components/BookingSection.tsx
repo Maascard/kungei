@@ -120,7 +120,12 @@ export default function BookingSection({
           comment: comment.trim(),
           channel,
           locale,
-          items: cartItems.map((i) => ({ kind: i.kind, title: i.title })),
+          items: cartItems.map((i) => ({
+            kind: i.kind,
+            title: i.title,
+            price: i.price,
+            qty: i.qty,
+          })),
         }),
       });
 

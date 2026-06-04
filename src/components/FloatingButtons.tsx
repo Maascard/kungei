@@ -15,7 +15,7 @@ export default function FloatingButtons({
 }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const { items, remove, clear, count } = useCart();
+  const { items, remove, setQty, clear, count, total } = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 300);
@@ -61,14 +61,37 @@ export default function FloatingButtons({
             ) : (
               <div className="space-y-4">
                 {services.length > 0 && (
-                  <CartGroup title={dict.cart.servicesGroup} items={services} onRemove={remove} />
+                  <CartGroup
+                    title={dict.cart.servicesGroup}
+                    items={services}
+                    onRemove={remove}
+                    setQty={setQty}
+                    showQty={false}
+                    currency={dict.menu.currency}
+                  />
                 )}
                 {food.length > 0 && (
-                  <CartGroup title={dict.cart.foodGroup} items={food} onRemove={remove} />
+                  <CartGroup
+                    title={dict.cart.foodGroup}
+                    items={food}
+                    onRemove={remove}
+                    setQty={setQty}
+                    showQty
+                    currency={dict.menu.currency}
+                  />
+                )}
+
+                {total > 0 && (
+                  <div className="flex items-center justify-between border-t border-charcoal/15 pt-3 font-display text-lg text-forest">
+                    <span>{dict.cart.total}</span>
+                    <span>
+                      {total.toLocaleString("ru-RU")} {dict.menu.currency}
+                    </span>
+                  </div>
                 )}
 
                 <p className="rounded-lg bg-sand/60 px-3 py-2 text-xs text-charcoal/60">
-                  {dict.cart.orderNote}
+                  {total > 0 ? dict.cart.approx : dict.cart.orderNote}
                 </p>
 
                 <div className="flex gap-2">
@@ -128,10 +151,16 @@ function CartGroup({
   title,
   items,
   onRemove,
+  setQty,
+  showQty,
+  currency,
 }: {
   title: string;
-  items: { id: string; title: string }[];
+  items: { id: string; title: string; price: number; qty: number }[];
   onRemove: (id: string) => void;
+  setQty: (id: string, qty: number) => void;
+  showQty: boolean;
+  currency: string;
 }) {
   return (
     <div>
@@ -142,18 +171,50 @@ function CartGroup({
         {items.map((i) => (
           <li
             key={i.id}
-            className="flex items-start justify-between gap-2 rounded-lg bg-white px-3 py-2 text-sm text-charcoal"
+            className="rounded-lg bg-white px-3 py-2 text-sm text-charcoal"
           >
-            <span className="flex-1">{i.title}</span>
-            <button
-              onClick={() => onRemove(i.id)}
-              className="text-charcoal/40 hover:text-red-600"
-              aria-label="remove"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M6 6l12 12M6 18L18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-            </button>
+            <div className="flex items-start justify-between gap-2">
+              <span className="flex-1">{i.title}</span>
+              <button
+                onClick={() => onRemove(i.id)}
+                className="mt-0.5 text-charcoal/40 hover:text-red-600"
+                aria-label="remove"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 6l12 12M6 18L18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              </button>
+            </div>
+            {(showQty || i.price > 0) && (
+              <div className="mt-1.5 flex items-center justify-between">
+                {showQty ? (
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      onClick={() => setQty(i.id, i.qty - 1)}
+                      className="flex h-7 w-7 items-center justify-center rounded-full border border-charcoal/20 text-base leading-none hover:bg-sand"
+                      aria-label="minus"
+                    >
+                      −
+                    </button>
+                    <span className="w-6 text-center font-medium">{i.qty}</span>
+                    <button
+                      onClick={() => setQty(i.id, i.qty + 1)}
+                      className="flex h-7 w-7 items-center justify-center rounded-full border border-charcoal/20 text-base leading-none hover:bg-sand"
+                      aria-label="plus"
+                    >
+                      +
+                    </button>
+                  </div>
+                ) : (
+                  <span />
+                )}
+                {i.price > 0 && (
+                  <span className="font-medium text-bronze">
+                    {(i.price * i.qty).toLocaleString("ru-RU")} {currency}
+                  </span>
+                )}
+              </div>
+            )}
           </li>
         ))}
       </ul>

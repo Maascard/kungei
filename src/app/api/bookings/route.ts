@@ -31,6 +31,8 @@ const schema = z.object({
       z.object({
         kind: z.enum(["service", "food"]),
         title: z.string().trim().min(1).max(200),
+        price: z.coerce.number().min(0).max(100000000).optional(),
+        qty: z.coerce.number().int().min(1).max(999).optional(),
       }),
     )
     .max(60)

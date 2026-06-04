@@ -8,37 +8,58 @@ import {
   useCallback,
 } from "react";
 
-export type CartItem = { id: string; kind: "service" | "food"; title: string };
+export type CartItem = {
+  id: string;
+  kind: "service" | "food";
+  title: string;
+  price: number; // цена за единицу, ₸ (0 — без цены)
+  qty: number;
+};
+
+// То, что передаётся при добавлении (qty проставляется автоматически)
+export type CartInput = Omit<CartItem, "qty">;
 
 type CartContextType = {
   items: CartItem[];
-  toggle: (item: CartItem) => void;
+  toggle: (item: CartInput) => void;
   remove: (id: string) => void;
+  setQty: (id: string, qty: number) => void;
   clear: () => void;
   has: (id: string) => boolean;
   count: number;
+  total: number;
 };
 
 const CartContext = createContext<CartContextType | null>(null);
-
 const STORAGE_KEY = "kungei_cart";
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [loaded, setLoaded] = useState(false);
 
-  // Загрузка из localStorage
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setItems(JSON.parse(raw));
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) {
+          setItems(
+            parsed.map((i) => ({
+              id: String(i.id),
+              kind: i.kind === "service" ? "service" : "food",
+              title: String(i.title ?? ""),
+              price: Number(i.price) || 0,
+              qty: Math.max(1, Number(i.qty) || 1),
+            })),
+          );
+        }
+      }
     } catch {
       /* ignore */
     }
     setLoaded(true);
   }, []);
 
-  // Сохранение
   useEffect(() => {
     if (!loaded) return;
     try {
@@ -48,11 +69,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [items, loaded]);
 
-  const toggle = useCallback((item: CartItem) => {
+  const toggle = useCallback((item: CartInput) => {
     setItems((prev) =>
       prev.some((i) => i.id === item.id)
         ? prev.filter((i) => i.id !== item.id)
-        : [...prev, item],
+        : [...prev, { ...item, qty: 1 }],
     );
   }, []);
 
@@ -60,16 +81,32 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setItems((prev) => prev.filter((i) => i.id !== id));
   }, []);
 
-  const clear = useCallback(() => setItems([]), []);
+  const setQty = useCallback((id: string, qty: number) => {
+    setItems((prev) =>
+      prev.map((i) => (i.id === id ? { ...i, qty: Math.max(1, qty) } : i)),
+    );
+  }, []);
 
+  const clear = useCallback(() => setItems([]), []);
   const has = useCallback(
     (id: string) => items.some((i) => i.id === id),
     [items],
   );
 
+  const total = items.reduce((sum, i) => sum + i.price * i.qty, 0);
+
   return (
     <CartContext.Provider
-      value={{ items, toggle, remove, clear, has, count: items.length }}
+      value={{
+        items,
+        toggle,
+        remove,
+        setQty,
+        clear,
+        has,
+        count: items.length,
+        total,
+      }}
     >
       {children}
     </CartContext.Provider>
@@ -79,14 +116,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 export function useCart(): CartContextType {
   const ctx = useContext(CartContext);
   if (!ctx) {
-    // Запасной no-op (если вызвано вне провайдера)
     return {
       items: [],
       toggle: () => {},
       remove: () => {},
+      setQty: () => {},
       clear: () => {},
       has: () => false,
       count: 0,
+      total: 0,
     };
   }
   return ctx;

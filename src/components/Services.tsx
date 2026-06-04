@@ -4,7 +4,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import Reveal from "./Reveal";
 import AddButton from "./AddButton";
 
-type Service = { title: string; desc: string };
+type Service = { title: string; desc: string; price: number };
 
 const ICONS = ["home", "fire", "leaf", "dish"] as const;
 
@@ -37,6 +37,11 @@ export default function Services({
                   <Icon name={ICONS[i % ICONS.length]} />
                 </span>
                 <h3 className="font-display text-lg text-forest">{s.title}</h3>
+                {s.price > 0 && (
+                  <div className="mt-1 font-display text-xl text-bronze">
+                    {s.price.toLocaleString("ru-RU")} {dict.menu.currency}
+                  </div>
+                )}
                 {s.desc && (
                   <p className="mt-2 text-sm leading-relaxed text-charcoal/65">{s.desc}</p>
                 )}
@@ -44,7 +49,12 @@ export default function Services({
                   <AddButton
                     dict={dict}
                     full
-                    item={{ id: `service:${s.title}`, kind: "service", title: s.title }}
+                    item={{
+                      id: `service:${s.title}`,
+                      kind: "service",
+                      title: s.title,
+                      price: s.price,
+                    }}
                   />
                 </div>
               </div>

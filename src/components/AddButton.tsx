@@ -1,6 +1,6 @@
 "use client";
 
-import { useCart, type CartItem } from "./CartProvider";
+import { useCart, type CartInput } from "./CartProvider";
 import type { Dictionary } from "@/i18n/dictionaries";
 
 // Кнопка-переключатель «Добавить в корзину» / «В корзине».
@@ -9,7 +9,7 @@ export default function AddButton({
   dict,
   full = false,
 }: {
-  item: CartItem;
+  item: CartInput;
   dict: Dictionary;
   full?: boolean;
 }) {

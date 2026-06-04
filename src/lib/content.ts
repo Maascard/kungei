@@ -27,11 +27,17 @@ export function toList(value: string): string[] {
     .filter(Boolean);
 }
 
-// Разбирает список услуг: каждая строка "Название|Описание" (описание необязательно).
-export function toServices(value: string): { title: string; desc: string }[] {
+// Разбирает список услуг: каждая строка "Название|Описание|Цена".
+// Описание и цена необязательны.
+export function toServices(
+  value: string,
+): { title: string; desc: string; price: number }[] {
   return toList(value).map((line) => {
-    const [title, ...rest] = line.split("|");
-    return { title: title.trim(), desc: rest.join("|").trim() };
+    const parts = line.split("|");
+    const title = (parts[0] ?? "").trim();
+    const desc = (parts[1] ?? "").trim();
+    const price = Math.max(0, Math.round(Number((parts[2] ?? "").replace(/[^\d.]/g, "")) || 0));
+    return { title, desc, price };
   });
 }
 
