@@ -23,6 +23,7 @@ import Reviews from "@/components/Reviews";
 import MapSection from "@/components/MapSection";
 import Footer from "@/components/Footer";
 import FloatingButtons from "@/components/FloatingButtons";
+import ChatWidget from "@/components/ChatWidget";
 import { CartProvider } from "@/components/CartProvider";
 
 export const dynamic = "force-dynamic";
@@ -124,6 +125,7 @@ export default async function HomePage({
         />
       </main>
       <FloatingButtons dict={dict} waLink={waLink} igLink={igLink} />
+      <ChatWidget dict={dict} waLink={waLink} />
     </CartProvider>
   );
 }
