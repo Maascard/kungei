@@ -27,17 +27,24 @@ export function toList(value: string): string[] {
     .filter(Boolean);
 }
 
-// Разбирает список услуг: каждая строка "Название|Описание|Цена".
-// Описание и цена необязательны.
+// Разбирает список услуг: каждая услуга на новой строке, формат:
+//   Название | Цена | пункт; пункт; пункт
+// Цена и пункты необязательны. Пункты разделяются точкой с запятой ";".
 export function toServices(
   value: string,
-): { title: string; desc: string; price: number }[] {
+): { title: string; price: number; items: string[] }[] {
   return toList(value).map((line) => {
     const parts = line.split("|");
     const title = (parts[0] ?? "").trim();
-    const desc = (parts[1] ?? "").trim();
-    const price = Math.max(0, Math.round(Number((parts[2] ?? "").replace(/[^\d.]/g, "")) || 0));
-    return { title, desc, price };
+    const price = Math.max(
+      0,
+      Math.round(Number((parts[1] ?? "").replace(/[^\d.]/g, "")) || 0),
+    );
+    const items = (parts[2] ?? "")
+      .split(";")
+      .map((s) => s.trim())
+      .filter(Boolean);
+    return { title, price, items };
   });
 }
 

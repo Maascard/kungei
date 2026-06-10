@@ -29,7 +29,10 @@ async function buildSystemPrompt(): Promise<string> {
 
   const fmtServices = (loc: Locale) =>
     toServices(pick(settings, "services", loc))
-      .map((s) => `  - ${s.title}${s.price ? ` — ${s.price} ₸` : ""}${s.desc ? `: ${s.desc}` : ""}`)
+      .map(
+        (s) =>
+          `  - ${s.title}${s.price ? ` — ${s.price} ₸` : ""}${s.items.length ? `: ${s.items.join(", ")}` : ""}`,
+      )
       .join("\n");
 
   const menuText = menu

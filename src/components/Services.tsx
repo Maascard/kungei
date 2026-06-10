@@ -4,7 +4,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import Reveal from "./Reveal";
 import AddButton from "./AddButton";
 
-type Service = { title: string; desc: string; price: number };
+type Service = { title: string; price: number; items: string[] };
 
 const ICONS = ["home", "fire", "leaf", "dish"] as const;
 
@@ -29,23 +29,26 @@ export default function Services({
           <p className="mt-3 text-charcoal/60">{dict.sections.servicesSubtitle}</p>
           <div className="title-accent-center" />
         </Reveal>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 lg:grid-cols-3">
           {services.map((s, i) => (
             <Reveal key={i} delay={i * 100}>
-              <div className="lift group flex h-full flex-col items-start rounded-2xl bg-white p-6 shadow-soft">
-                <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-forest/15 to-clay/25 text-forest transition-transform duration-300 group-hover:scale-110">
+              <div className="lift group flex h-full flex-col items-center rounded-2xl border border-bronze/15 bg-white p-6 text-center shadow-soft">
+                <span className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-forest/15 to-clay/25 text-forest transition-transform duration-300 group-hover:scale-110">
                   <Icon name={ICONS[i % ICONS.length]} />
                 </span>
-                <h3 className="font-display text-lg text-forest">{s.title}</h3>
+                <h3 className="font-display text-xl text-forest">{s.title}</h3>
                 {s.price > 0 && (
-                  <div className="mt-1 font-display text-xl text-bronze">
+                  <div className="mt-1 font-display text-2xl text-bronze">
                     {s.price.toLocaleString("ru-RU")} {dict.menu.currency}
                   </div>
                 )}
-                {s.desc && (
-                  <p className="mt-2 text-sm leading-relaxed text-charcoal/65">{s.desc}</p>
-                )}
-                <div className="mt-auto w-full pt-4">
+                <div className="my-4 h-px w-2/3 bg-gradient-to-r from-transparent via-bronze/40 to-transparent" />
+                <ul className="space-y-2 text-sm leading-snug text-charcoal/75">
+                  {s.items.map((it, j) => (
+                    <li key={j}>{it}</li>
+                  ))}
+                </ul>
+                <div className="mt-auto w-full pt-5">
                   <AddButton
                     dict={dict}
                     full
