@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { apiJson } from "./api";
+import ImageInput from "./ImageInput";
 
 export default function ReviewsTab({
   reviews,
@@ -14,23 +15,36 @@ export default function ReviewsTab({
   const [textRu, setTextRu] = useState("");
   const [textKk, setTextKk] = useState("");
   const [rating, setRating] = useState(5);
+  const [imageUrl, setImageUrl] = useState("");
   const [busy, setBusy] = useState(false);
 
   const add = async () => {
     if (!author || !textRu) return;
     setBusy(true);
-    await apiJson("/api/admin/reviews", "POST", { author, textRu, textKk, rating });
+    await apiJson("/api/admin/reviews", "POST", {
+      author,
+      textRu,
+      textKk,
+      rating,
+      imageUrl,
+    });
     setBusy(false);
     setAuthor("");
     setTextRu("");
     setTextKk("");
     setRating(5);
+    setImageUrl("");
     onChange();
   };
 
   const remove = async (id: string) => {
     if (!confirm("Удалить отзыв?")) return;
     await apiJson("/api/admin/reviews", "DELETE", { id });
+    onChange();
+  };
+
+  const setPhoto = async (id: string, url: string) => {
+    await apiJson("/api/admin/reviews", "PATCH", { id, imageUrl: url });
     onChange();
   };
 
@@ -50,6 +64,9 @@ export default function ReviewsTab({
         </div>
         <textarea className="field mt-3 min-h-[70px]" placeholder="Текст отзыва (рус)" value={textRu} onChange={(e) => setTextRu(e.target.value)} />
         <textarea className="field mt-3 min-h-[70px]" placeholder="Текст отзыва (қаз) — необязательно" value={textKk} onChange={(e) => setTextKk(e.target.value)} />
+        <div className="mt-3">
+          <ImageInput label="Фото к отзыву (необязательно)" value={imageUrl} onChange={setImageUrl} />
+        </div>
         <button onClick={add} disabled={busy || !author || !textRu} className="btn-primary mt-4">
           {busy ? "Добавляем…" : "Добавить отзыв"}
         </button>
@@ -64,8 +81,15 @@ export default function ReviewsTab({
             </div>
             <p className="mt-2 text-sm text-charcoal/70">{r.textRu}</p>
             {r.textKk && <p className="mt-1 text-sm text-charcoal/50">{r.textKk}</p>}
+            <div className="mt-3">
+              <ImageInput
+                label="Фото"
+                value={r.imageUrl || ""}
+                onChange={(url) => setPhoto(r.id, url)}
+              />
+            </div>
             <button onClick={() => remove(r.id)} className="mt-3 text-sm text-red-600 hover:underline">
-              удалить
+              удалить отзыв
             </button>
           </div>
         ))}

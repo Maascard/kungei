@@ -1,7 +1,13 @@
 import type { Dictionary } from "@/i18n/dictionaries";
 import Reveal from "./Reveal";
 
-type ReviewView = { id: string; author: string; text: string; rating: number };
+type ReviewView = {
+  id: string;
+  author: string;
+  text: string;
+  rating: number;
+  imageUrl?: string | null;
+};
 
 export default function Reviews({
   dict,
@@ -21,14 +27,25 @@ export default function Reviews({
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {reviews.map((r, i) => (
             <Reveal key={r.id} delay={(i % 3) * 90}>
-              <figure className="lift flex h-full flex-col rounded-2xl bg-white p-6 shadow-soft">
-                <Stars n={r.rating} />
-                <blockquote className="mt-3 flex-1 text-charcoal/75">
-                  “{r.text}”
-                </blockquote>
-                <figcaption className="mt-4 font-medium text-forest">
-                  {r.author}
-                </figcaption>
+              <figure className="lift flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-soft">
+                {r.imageUrl && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={r.imageUrl}
+                    alt={r.author}
+                    loading="lazy"
+                    className="h-48 w-full object-cover"
+                  />
+                )}
+                <div className="flex flex-1 flex-col p-6">
+                  <Stars n={r.rating} />
+                  <blockquote className="mt-3 flex-1 text-charcoal/75">
+                    “{r.text}”
+                  </blockquote>
+                  <figcaption className="mt-4 font-medium text-forest">
+                    {r.author}
+                  </figcaption>
+                </div>
               </figure>
             </Reveal>
           ))}

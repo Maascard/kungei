@@ -83,6 +83,7 @@ export default async function HomePage({
     author: r.author,
     text: (locale === "kk" ? r.textKk : r.textRu) || r.textRu,
     rating: r.rating,
+    imageUrl: r.imageUrl,
   }));
 
   return (

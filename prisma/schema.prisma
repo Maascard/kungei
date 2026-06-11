@@ -93,6 +93,7 @@ model Review {
   textRu    String
   textKk    String?
   rating    Int      @default(5)
+  imageUrl  String?
   sortOrder Int      @default(0)
   createdAt DateTime @default(now())
 
