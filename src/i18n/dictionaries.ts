@@ -66,6 +66,8 @@ const ru = {
     reviewsTitle: "Отзывы гостей",
     contactsTitle: "Контакты",
     mapTitle: "Как нас найти",
+    route2gis: "Построить маршрут в 2ГИС",
+    open2gis: "Открыть в 2ГИС",
   },
   booking: {
     selectDates: "Выберите даты",
@@ -177,6 +179,8 @@ const kk: typeof ru = {
     reviewsTitle: "Қонақтардың пікірлері",
     contactsTitle: "Байланыс",
     mapTitle: "Бізді қалай табуға болады",
+    route2gis: "2ГИС-те маршрут құру",
+    open2gis: "2ГИС-те ашу",
   },
   booking: {
     selectDates: "Күндерді таңдаңыз",
