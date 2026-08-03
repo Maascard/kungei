@@ -15,10 +15,17 @@ const config: Config = {
         forest: "#6E1F2B", // глубокое бордо (основной тёмный)
         moss: "#8A3340", // светлее бордо (наведение)
         charcoal: "#2B201B", // эспрессо (текст, футер)
+
+        // Палитра лендинга the BASE (напитки)
+        baseblack: "#0a0a0b",
+        baseink: "#141416",
+        basecream: "#f3efe7",
+        basered: "#e0301e",
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-display)", "Georgia", "serif"],
+        basedisplay: ["var(--font-base-display)", "system-ui", "sans-serif"],
       },
       borderRadius: {
         xl2: "1.5rem",

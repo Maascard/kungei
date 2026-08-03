@@ -1,0 +1,119 @@
+.base-page {
+  font-family: var(--font-base-display), system-ui, sans-serif;
+}
+
+/* Тонкий шум по фону для премиального ощущения на чёрном */
+.base-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes base-scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(10px);
+    opacity: 1;
+  }
+}
+.base-scroll-cue {
+  animation: base-scroll-cue 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .base-scroll-cue {
+    animation: none !important;
+  }
+}
+
+/* ---------- Карточка-пауч (стилизованный плейсхолдер упаковки) ---------- */
+.base-pouch {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  border-radius: 46% 46% 10% 10% / 30% 30% 8% 8%;
+  background: linear-gradient(155deg, #f8f7f4 0%, #e6e3db 55%, #d9d5cb 100%);
+  box-shadow:
+    0 22px 45px -16px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  padding: 11% 10% 9%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(4px, 5cqw, 10px);
+}
+.base-pouch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    100deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 62%
+  );
+  pointer-events: none;
+}
+.base-pouch-window {
+  position: relative;
+  width: 82%;
+  aspect-ratio: 1 / 1.05;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 3px rgba(255, 255, 255, 0.75);
+  flex-shrink: 0;
+}
+.base-pouch-drink {
+  position: absolute;
+  inset: 0;
+}
+.base-pouch-layer {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+.base-pouch-foam {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 6%;
+  height: 26%;
+  border-radius: 50% 50% 46% 46% / 60% 60% 40% 40%;
+  box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.08);
+}
+.base-pouch-garnish {
+  position: absolute;
+  border-radius: 50%;
+}
+.base-pouch-badge {
+  font-family: var(--font-base-display), system-ui, sans-serif;
+  font-size: clamp(6px, 4.2cqw, 8px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #e0301e;
+  padding: clamp(2px, 1.4cqw, 3px) clamp(6px, 4.5cqw, 9px);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.base-pouch-name {
+  font-family: var(--font-base-display), system-ui, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: #17140f;
+  text-align: center;
+  font-size: clamp(9px, 8.6cqw, 13px);
+  line-height: 1.12;
+}
