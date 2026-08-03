@@ -2,6 +2,7 @@ import { BaseNav } from "@/components/base/BaseNav";
 import { BaseHero } from "@/components/base/BaseHero";
 import { BaseCatalog } from "@/components/base/BaseCatalog";
 import { BaseStory } from "@/components/base/BaseStory";
+import { BaseOrder } from "@/components/base/BaseOrder";
 import { BaseFooter } from "@/components/base/BaseFooter";
 
 export default function BasePage() {
@@ -11,6 +12,7 @@ export default function BasePage() {
       <BaseHero />
       <BaseCatalog />
       <BaseStory />
+      <BaseOrder />
       <BaseFooter />
     </main>
   );
